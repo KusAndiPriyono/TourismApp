@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.tourismapp.core.data.TourismRepository
 import com.bangkit.tourismapp.core.di.Injection
+import com.bangkit.tourismapp.ui.detail.DetailTourismViewModel
+import com.bangkit.tourismapp.ui.favorite.FavoriteViewModel
 import com.bangkit.tourismapp.ui.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val tourismRepository: TourismRepository) :
@@ -24,9 +26,17 @@ class ViewModelFactory private constructor(private val tourismRepository: Touris
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
+        return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                return HomeViewModel(tourismRepository) as T
+                HomeViewModel(tourismRepository) as T
+            }
+
+            modelClass.isAssignableFrom(DetailTourismViewModel::class.java) -> {
+                DetailTourismViewModel(tourismRepository) as T
+            }
+
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
+                FavoriteViewModel(tourismRepository) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
