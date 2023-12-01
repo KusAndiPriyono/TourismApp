@@ -2,8 +2,10 @@ package com.bangkit.tourismapp.core.domain.usecase
 
 import com.bangkit.tourismapp.core.domain.model.Tourism
 import com.bangkit.tourismapp.core.domain.repository.ITourismRepository
+import javax.inject.Inject
 
-class TourismInteractor(private val tourismRepository: ITourismRepository) : TourismUseCase {
+class TourismInteractor @Inject constructor(private val tourismRepository: ITourismRepository) :
+    TourismUseCase {
     override fun getAllTourism() = tourismRepository.getAllTourism()
 
     override fun getFavoriteTourism() = tourismRepository.getFavoriteTourism()

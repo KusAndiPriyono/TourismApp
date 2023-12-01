@@ -1,31 +1,40 @@
 package com.bangkit.tourismapp.ui.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import com.bangkit.tourismapp.MyApplication
 import com.bangkit.tourismapp.R
 import com.bangkit.tourismapp.core.domain.model.Tourism
 import com.bangkit.tourismapp.databinding.ActivityDetailTourismBinding
 import com.bangkit.tourismapp.ui.ViewModelFactory
 import com.bumptech.glide.Glide
+import javax.inject.Inject
 
 class DetailTourismActivity : AppCompatActivity() {
 
-    private lateinit var detailTourismViewModel: DetailTourismViewModel
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val detailTourismViewModel: DetailTourismViewModel by viewModels {
+        factory
+    }
+
     private lateinit var binding: ActivityDetailTourismBinding
 
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailTourismBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
 
-        val factory = ViewModelFactory.getInstance(this)
-        detailTourismViewModel =
-            ViewModelProvider(this, factory)[DetailTourismViewModel::class.java]
+//        val factory = ViewModelFactory.getInstance(this)
+//        detailTourismViewModel =
+//            ViewModelProvider(this, factory)[DetailTourismViewModel::class.java]
 
         val detailTourism = intent.getParcelableExtra<Tourism>(EXTRA_DATA)
         showDetailTourism(detailTourism)
