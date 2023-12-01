@@ -1,11 +1,12 @@
 package com.bangkit.tourismapp.core.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.bangkit.tourismapp.core.data.source.local.LocalDataSource
-import com.bangkit.tourismapp.core.data.source.local.entity.TourismEntity
 import com.bangkit.tourismapp.core.data.source.remote.RemoteDataSource
 import com.bangkit.tourismapp.core.data.source.remote.network.ApiResponse
 import com.bangkit.tourismapp.core.data.source.remote.response.TourismResponse
+import com.bangkit.tourismapp.core.domain.model.Tourism
 import com.bangkit.tourismapp.core.utils.AppExecutors
 import com.bangkit.tourismapp.core.utils.DataMapper
 
@@ -29,10 +30,12 @@ class TourismRepository private constructor(
         }
     }
 
-    fun getAllTourism(): LiveData<Resource<List<TourismEntity>>> =
-        object : NetworkBoundResource<List<TourismEntity>, List<TourismResponse>>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<TourismEntity>> {
-                return localDataSource.getAllTourism()
+    fun getAllTourism(): LiveData<Resource<List<Tourism>>> =
+        object : NetworkBoundResource<List<Tourism>, List<TourismResponse>>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<Tourism>> {
+                return localDataSource.getAllTourism().map {
+                    DataMapper.mapEntitiesToDomain(it)
+                }
             }
 
             override fun createCall(): LiveData<ApiResponse<List<TourismResponse>>> =
@@ -43,15 +46,18 @@ class TourismRepository private constructor(
                 localDataSource.insertTourism(tourismList)
             }
 
-            override fun shouldFetch(data: List<TourismEntity>?): Boolean =
+            override fun shouldFetch(data: List<Tourism>?): Boolean =
                 data.isNullOrEmpty()
         }.asLiveData()
 
-    fun getFavoriteTourism(): LiveData<List<TourismEntity>> {
-        return localDataSource.getFavoriteTourism()
+    fun getFavoriteTourism(): LiveData<List<Tourism>> {
+        return localDataSource.getFavoriteTourism().map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
     }
 
-    fun setFavoriteTourism(tourism: TourismEntity, state: Boolean) {
-        appExecutors.diskIO().execute { localDataSource.setFavoriteTourism(tourism, state) }
+    fun setFavoriteTourism(tourism: Tourism, state: Boolean) {
+        val tourismEntity = DataMapper.mapDomainToEntity(tourism)
+        appExecutors.diskIO().execute { localDataSource.setFavoriteTourism(tourismEntity, state) }
     }
 }

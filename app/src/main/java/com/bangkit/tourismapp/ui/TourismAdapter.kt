@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bangkit.tourismapp.core.data.source.local.entity.TourismEntity
+import com.bangkit.tourismapp.core.domain.model.Tourism
 import com.bangkit.tourismapp.databinding.ItemListTourismBinding
 import com.bumptech.glide.Glide
 
 class TourismAdapter : RecyclerView.Adapter<TourismAdapter.ListViewHolder>() {
 
-    private var listData = ArrayList<TourismEntity>()
-    var onItemClick: ((TourismEntity) -> Unit)? = null
+    private var listData = ArrayList<Tourism>()
+    var onItemClick: ((Tourism) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(newListData: List<TourismEntity>?) {
+    fun setData(newListData: List<Tourism>?) {
         if (newListData == null)
             return
         listData.clear()
@@ -39,7 +39,7 @@ class TourismAdapter : RecyclerView.Adapter<TourismAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemListTourismBinding.bind(itemView)
-        fun bind(data: TourismEntity) {
+        fun bind(data: Tourism) {
             with(binding) {
                 Glide.with(itemView.context)
                     .load(data.image)
