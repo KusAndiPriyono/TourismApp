@@ -2,8 +2,9 @@ package com.bangkit.tourismapp.ui.favorite
 
 import androidx.lifecycle.ViewModel
 import com.bangkit.tourismapp.core.data.TourismRepository
+import com.bangkit.tourismapp.core.domain.usecase.TourismUseCase
 
-class FavoriteViewModel(tourismRepository: TourismRepository) : ViewModel() {
+class FavoriteViewModel(tourismUseCase: TourismUseCase) : ViewModel() {
 
-    val favoriteTourism = tourismRepository.getFavoriteTourism()
+    val favoriteTourism = tourismUseCase.getFavoriteTourism()
 }
