@@ -1,12 +1,12 @@
-package com.bangkit.tourismapp.ui
+package com.bangkit.tourismapp.core.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.tourismapp.core.databinding.ItemListTourismBinding
 import com.bangkit.tourismapp.core.domain.model.Tourism
-import com.bangkit.tourismapp.databinding.ItemListTourismBinding
 import com.bumptech.glide.Glide
 
 class TourismAdapter : RecyclerView.Adapter<TourismAdapter.ListViewHolder>() {

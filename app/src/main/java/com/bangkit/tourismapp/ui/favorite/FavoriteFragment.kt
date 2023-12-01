@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.tourismapp.databinding.FragmentFavoriteBinding
-import com.bangkit.tourismapp.ui.TourismAdapter
+import com.bangkit.tourismapp.core.ui.TourismAdapter
 import com.bangkit.tourismapp.ui.detail.DetailTourismActivity
 import dagger.hilt.android.AndroidEntryPoint
 

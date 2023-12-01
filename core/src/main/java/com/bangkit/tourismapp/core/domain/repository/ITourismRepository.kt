@@ -5,7 +5,7 @@ import com.bangkit.tourismapp.core.domain.model.Tourism
 import kotlinx.coroutines.flow.Flow
 
 interface ITourismRepository {
-    fun getAllTourism(): Flow<Resource<List<Tourism>>>
+    fun getAllTourism(): Flow<com.bangkit.tourismapp.core.data.Resource<List<Tourism>>>
 
     fun getFavoriteTourism(): Flow<List<Tourism>>
 

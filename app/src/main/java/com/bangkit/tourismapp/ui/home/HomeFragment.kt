@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.tourismapp.R
-import com.bangkit.tourismapp.core.data.Resource
 import com.bangkit.tourismapp.databinding.FragmentHomeBinding
-import com.bangkit.tourismapp.ui.TourismAdapter
+import com.bangkit.tourismapp.core.ui.TourismAdapter
 import com.bangkit.tourismapp.ui.detail.DetailTourismActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,13 +61,13 @@ class HomeFragment : Fragment() {
             homeViewModel.tourism.observe(viewLifecycleOwner) { tourism ->
                 if (tourism != null) {
                     when (tourism) {
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is Resource.Success -> {
+                        is com.bangkit.tourismapp.core.data.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is com.bangkit.tourismapp.core.data.Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             tourismAdapter.setData(tourism.data)
                         }
 
-                        is Resource.Error -> {
+                        is com.bangkit.tourismapp.core.data.Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
                             binding.viewError.tvError.text =
