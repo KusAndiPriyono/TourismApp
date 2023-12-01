@@ -7,7 +7,10 @@ import com.bangkit.tourismapp.ui.home.HomeFragment
 import dagger.Component
 
 @AppScope
-@Component(dependencies = [CoreComponent::class], modules = [AppModule::class])
+@Component(
+    dependencies = [CoreComponent::class],
+    modules = [AppModule::class, ViewModelModule::class]
+)
 interface AppComponent {
 
     @Component.Factory
