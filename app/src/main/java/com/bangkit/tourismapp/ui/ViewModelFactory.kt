@@ -2,16 +2,13 @@ package com.bangkit.tourismapp.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.tourismapp.core.domain.usecase.TourismUseCase
 import com.bangkit.tourismapp.di.AppScope
-import com.bangkit.tourismapp.ui.detail.DetailTourismViewModel
-import com.bangkit.tourismapp.ui.favorite.FavoriteViewModel
-import com.bangkit.tourismapp.ui.home.HomeViewModel
 import javax.inject.Inject
+import javax.inject.Provider
 
 @AppScope
 
-class ViewModelFactory @Inject constructor(private val tourismUseCase: TourismUseCase) :
+class ViewModelFactory @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
     ViewModelProvider.NewInstanceFactory() {
 
 //    companion object {
@@ -28,20 +25,9 @@ class ViewModelFactory @Inject constructor(private val tourismUseCase: TourismUs
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return when {
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(tourismUseCase) as T
-            }
-
-            modelClass.isAssignableFrom(DetailTourismViewModel::class.java) -> {
-                DetailTourismViewModel(tourismUseCase) as T
-            }
-
-            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
-                FavoriteViewModel(tourismUseCase) as T
-            }
-
-            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
-        }
+        val creator = creators[modelClass] ?: creators.entries.firstOrNull {
+            modelClass.isAssignableFrom(it.key)
+        }?.value ?: throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
+        return creator.get() as T
     }
 }
