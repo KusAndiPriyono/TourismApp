@@ -15,10 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TourismApp"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.detail.DetailTourismActivity"
-            android:label="@string/title_activity_detail_home"
-            android:theme="@style/Theme.TourismApp.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -29,6 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.detail.DetailTourismActivity"
+            android:label="@string/title_activity_detail_home"
+            android:theme="@style/Theme.TourismApp.NoActionBar" />
     </application>
 
 </manifest>

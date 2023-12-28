@@ -1,24 +1,19 @@
 plugins {
-    id("com.android.application")
+    id("com.android.dynamic-feature")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("kotlin-kapt")
-    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
 }
 
 apply(from = "../shared_dependencies.gradle")
 
 android {
-    namespace = "com.bangkit.tourismapp"
+    namespace = "com.bangkit.tourismapp.maps"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.bangkit.tourismapp"
         minSdk = 27
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,15 +34,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
     }
-    dynamicFeatures.addAll(listOf(":maps"))
 }
 
 dependencies {
-
     implementation(project(":core"))
+    implementation(project(":app"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 
